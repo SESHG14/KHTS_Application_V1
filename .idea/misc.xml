@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/black_square_rounded.xml" value="0.363" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/blue_square_rounded.xml" value="0.2815" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/circle_grey.xml" value="0.311" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/circle_red.xml" value="0.2965" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/circular_progress_bar_elec.xml" value="0.2815" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/circular_progress_bar_water.xml" value="0.3355" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/circular_shape.xml" value="0.3345" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/gradient_white_square_rounded.xml" value="0.364" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/line.xml" value="0.3355" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/login_logo_circle.xml" value="0.364" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/red_square_rounded.xml" value="0.364" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/white_circle.xml" value="0.363" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/drawable/white_square_rounded.xml" value="0.13" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/layout/activity_home.xml" value="0.1935897435897436" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/layout/activity_login1.xml" value="0.22" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/layout/activity_login2.xml" value="0.144017094017094" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/layout/activity_main.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/layout/activity_recharge.xml" value="0.25256410256410255" />
+        <entry key="..\:/Users/sesh1/Desktop/Coding/KHTSApplicationV1/app/src/main/res/layout/activity_water_stats.xml" value="0.29786324786324786" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
