@@ -17,7 +17,7 @@ public class Login_1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login1);
 
-        boolean stageOne = false;
+        final boolean[] stageOne = {false};
 
         Button button3 = findViewById(R.id.button3);
         EditText meterNumber = findViewById(R.id.edtMeterNumber);
@@ -52,7 +52,7 @@ public class Login_1 extends AppCompatActivity {
 
                 //Intent i = new Intent(getApplicationContext(),Home.class);
                 //startActivity(i);
-                if (!stageOne){
+                if (!stageOne[0]){
 
                     meterNum[0] = meterNumber.getText().toString();
                     IDNumb[0] = saIDNumber.getText().toString();
@@ -61,13 +61,16 @@ public class Login_1 extends AppCompatActivity {
                     meterNumber.setFocusable(true);
                     saIDNumber.setText("PASSWORD");
                     button3.setText("PROCEED");
+                    stageOne[0] = true;
 
                 }
-                else if (stageOne){
+                else if (stageOne[0]){
 
                     name[0] = meterNumber.getText().toString();
                     password[0] = saIDNumber.getText().toString();
 
+                    Intent i = new Intent(getApplicationContext(), Home.class);
+                    startActivity(i);
 
                 }
 

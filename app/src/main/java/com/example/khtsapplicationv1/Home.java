@@ -33,8 +33,17 @@ public class Home extends AppCompatActivity {
         //getData("http://sparkhts.zapto.org/khtsweb/khts-serv/public/index.php/customers/refresh/10");
         /*URL needs to be created depending on user!!!*/
         Button waterRecharge = findViewById(R.id.btnWaterTopUp);
+        Button mainRecharge = findViewById(R.id.btnRecharge);
 
         waterRecharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), WaterStats.class);
+                startActivity(i);
+            }
+        });
+
+        mainRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), recharge.class);
