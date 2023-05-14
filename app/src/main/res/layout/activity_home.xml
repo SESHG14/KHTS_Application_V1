@@ -249,7 +249,7 @@
         android:background="@drawable/circular_shape"
         android:indeterminate="false"
         android:max="100"
-        android:progress="60"
+        android:progress="24"
         android:progressDrawable="@drawable/circular_progress_bar_water"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

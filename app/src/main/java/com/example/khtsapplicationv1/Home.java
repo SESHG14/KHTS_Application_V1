@@ -30,7 +30,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //getData("http://sparkhts.zapto.org/khtsweb/khts-serv/public/index.php/customers/refresh/10");
+        getData("http://sparkhts.zapto.org/khtsweb/khts-serv/public/index.php/customers/refresh/1");
         /*URL needs to be created depending on user!!!*/
         Button waterRecharge = findViewById(R.id.btnWaterTopUp);
         Button mainRecharge = findViewById(R.id.btnRecharge);
@@ -97,6 +97,8 @@ public class Home extends AppCompatActivity {
                      *          ALSO
                      * Get water + elec status and
                      * change label text active/inactive*/
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
