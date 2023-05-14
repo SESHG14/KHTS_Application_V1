@@ -49,6 +49,11 @@ public class Login_2 extends AppCompatActivity {
             public void onClick(View view) {
 
                 String saID = ID.getText().toString();
+                Intent i = new Intent(getApplicationContext(), Home.class);
+                i.putExtra("userId",saID);
+                startActivity(i);
+
+                /*String saID = ID.getText().toString();
                 String password = pass.getText().toString();
                 String hashPass = null;
 
@@ -89,7 +94,7 @@ public class Login_2 extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"INVALID PASSWORD!",Toast.LENGTH_LONG).show();
                     }*/
 
-                //Log.d("returned_password", .toString());
+                //Log.d("returned_password", .toString());*/
 
 
             }

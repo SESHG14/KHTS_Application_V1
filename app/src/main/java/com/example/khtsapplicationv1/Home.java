@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +26,16 @@ public class Home extends AppCompatActivity {
     private StringRequest mStringRequest;
     private  String api_resp;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        getData("http://sparkhts.zapto.org/khtsweb/khts-serv/public/index.php/customers/refresh/1");
+        String saID = getIntent().getStringExtra("userId");
+        String url_get = "http://sparkhts.zapto.org/khtsweb/khts-serv/public/index.php/customers/refresh/" + saID;
+        getData(url_get);
+
         /*URL needs to be created depending on user!!!*/
         Button waterRecharge = findViewById(R.id.btnWaterTopUp);
         Button mainRecharge = findViewById(R.id.btnRecharge);
@@ -57,10 +62,23 @@ public class Home extends AppCompatActivity {
         final String[] address = new String[1];
         final String[] waterUsage = new String[1];
         final String[] elecUsage = new String[1];
+        final String[] TotalUnitsE = new String[1];
+        final String[] TotalUnitsW = new String[1];
+        final int[] waterState = new int[1];
+        final int[] elecState = new int[1];
 
         TextView addr = findViewById(R.id.txtAddress);
         TextView water = findViewById(R.id.lblWaterUsage);
         TextView elec = findViewById(R.id.lblElecUsage);
+        TextView TotalW = findViewById(R.id.txtTotalW);
+        TextView TotalE = findViewById(R.id.txtTotalE);
+        TextView WaterStatus = findViewById(R.id.lblwaterStatus);
+        TextView ElecStatus = findViewById(R.id.lblelecStatus);
+        TextView meterNumber = findViewById(R.id.txtMeterNum);
+        ProgressBar progWater = findViewById(R.id.prgWater);
+        ProgressBar progElec = findViewById(R.id.prgElec);
+
+
 
         //initialize RequestQueue
         mRequestQueue = Volley.newRequestQueue(this);
@@ -81,11 +99,45 @@ public class Home extends AppCompatActivity {
                     address[0] = customer.getString("address");                                    //getting variables
                     waterUsage[0] = reading.getString("water");
                     elecUsage[0] = reading.getString("electricity");
+                    TotalUnitsE[0] = customer.getString("TotalUnitsE");
+                    TotalUnitsW[0] = customer.getString("TotalUnitsW");
+                    waterState[0] = customer.getInt("water");
+                    elecState[0] = customer.getInt("elec");
+                    String meterNum = customer.getString("meterNumber");
+                    int maxWater = Integer.parseInt(TotalUnitsW[0].toString());
+                    int maxElec = Integer.parseInt(TotalUnitsE[0].toString());
+                    int usageWater = Integer.parseInt(waterUsage[0].toString());
+                    int usageElec = Integer.parseInt(elecUsage[0].toString());
 
 
                     addr.setText(address[0].toString());                                                //displaying usage data
                     water.setText(waterUsage[0].toString());
                     elec.setText(elecUsage[0].toString());
+                    TotalW.setText(TotalUnitsW[0].toString());
+                    TotalE.setText(TotalUnitsE[0].toString());
+                    meterNumber.setText(meterNum.toString());
+
+                    if (waterState[0] == 1){
+                        WaterStatus.setText("ACTIVE");
+                        progWater.setMax(maxWater);
+                        progWater.setProgress(maxWater-usageWater);
+
+                    }
+                    else{
+                        WaterStatus.setText("INACTIVE");
+                        progWater.setProgress(0);
+                    }
+
+                    if (elecState[0] == 1){
+                        ElecStatus.setText("ACTIVE");
+                        progElec.setMax(maxElec);
+                        progElec.setProgress(maxElec-usageElec);
+
+                    }
+                    else{
+                        ElecStatus.setText("INACTIVE");
+                        progElec.setProgress(0);
+                    }
 
                     /*For progress bars:
                      * get total units for each
