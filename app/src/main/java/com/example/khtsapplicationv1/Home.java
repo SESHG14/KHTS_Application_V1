@@ -25,7 +25,7 @@ public class Home extends AppCompatActivity {
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
     private  String api_resp;
-
+    String meterNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), WaterStats.class);
+                i.putExtra("meter", meterNum);
                 startActivity(i);
             }
         });
@@ -103,7 +104,7 @@ public class Home extends AppCompatActivity {
                     TotalUnitsW[0] = customer.getString("TotalUnitsW");
                     waterState[0] = customer.getInt("water");
                     elecState[0] = customer.getInt("elec");
-                    String meterNum = customer.getString("meterNumber");
+                    meterNum = customer.getString("meterNumber");
                     int maxWater = Integer.parseInt(TotalUnitsW[0].toString());
                     int maxElec = Integer.parseInt(TotalUnitsE[0].toString());
                     int usageWater = Integer.parseInt(waterUsage[0].toString());
@@ -117,7 +118,7 @@ public class Home extends AppCompatActivity {
                     TotalE.setText(TotalUnitsE[0].toString());
                     meterNumber.setText(meterNum.toString());
 
-                    if (waterState[0] == 1){
+                    if (waterState[0] == 1){                                                            //Setting progress bars
                         WaterStatus.setText("ACTIVE");
                         progWater.setMax(maxWater);
                         progWater.setProgress(maxWater-usageWater);
