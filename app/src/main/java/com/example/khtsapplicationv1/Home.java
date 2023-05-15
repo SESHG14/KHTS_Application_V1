@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -95,11 +96,9 @@ public class Home extends AppCompatActivity {
                 try {
                     JSONObject user = new JSONObject(api_resp);                                          //separating JSON structure
                     JSONObject customer = user.getJSONObject("customer");
-                    JSONObject reading = user.getJSONObject("latestreading");
+                    JSONArray reading = user.getJSONArray("latestreading");
 
                     address[0] = customer.getString("address");                                    //getting variables
-                    waterUsage[0] = reading.getString("water");
-                    elecUsage[0] = reading.getString("electricity");
                     TotalUnitsE[0] = customer.getString("TotalUnitsE");
                     TotalUnitsW[0] = customer.getString("TotalUnitsW");
                     waterState[0] = customer.getInt("water");
@@ -109,7 +108,14 @@ public class Home extends AppCompatActivity {
                     int maxElec = Integer.parseInt(TotalUnitsE[0].toString());
                     int usageWater = Integer.parseInt(waterUsage[0].toString());
                     int usageElec = Integer.parseInt(elecUsage[0].toString());
+                    double tempWater = 0;
+                    double tempElec = 0;
 
+                    for(int i=0;i<reading.length();i++){
+                        JSONObject current = reading.getJSONObject(i);
+                        tempWater += current.getDouble("water");
+                        tempElec += current.getDouble("electricity");
+                    }
 
                     addr.setText(address[0].toString());                                                //displaying usage data
                     water.setText(waterUsage[0].toString());
@@ -117,6 +123,8 @@ public class Home extends AppCompatActivity {
                     TotalW.setText(TotalUnitsW[0].toString());
                     TotalE.setText(TotalUnitsE[0].toString());
                     meterNumber.setText(meterNum.toString());
+
+
 
                     if (waterState[0] == 1){                                                            //Setting progress bars
                         WaterStatus.setText("ACTIVE");
