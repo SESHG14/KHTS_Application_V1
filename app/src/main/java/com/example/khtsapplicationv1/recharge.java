@@ -42,6 +42,9 @@ public class recharge extends AppCompatActivity {
                     Total.setText("R1094.22");
                     date.setText("2023-05-16");
                 }
+                else{
+                    Toast.makeText(getApplicationContext(),"Invalid Recharge, Please check that you have entered the token correctly", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

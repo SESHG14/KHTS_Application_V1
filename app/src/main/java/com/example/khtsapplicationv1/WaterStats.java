@@ -70,14 +70,14 @@ public class WaterStats extends AppCompatActivity {
         graph.setTitleTextSize(50);
         graph.addSeries(series);
         graph.addSeries(seriesE);
-        //graph.setPivotY(1);
+        graph.setPivotY(1);
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);
         graph.getViewport().setDrawBorder(true);
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
         graph.getGridLabelRenderer().setNumHorizontalLabels(3);
         graph.getGridLabelRenderer().setNumVerticalLabels(10);
         graph.getGridLabelRenderer().setHumanRounding(false);
-        graph.getViewport().setMaxYAxisSize(10);
+        graph.getViewport().setMaxYAxisSize(5);
         graph.getViewport().setYAxisBoundsManual(true);
         getData(url);
 
@@ -111,7 +111,10 @@ public class WaterStats extends AppCompatActivity {
     private void getData(String url){
         //initialize RequestQueue
         mRequestQueue = Volley.newRequestQueue(this);
-
+        TextView maxW = findViewById(R.id.maxW);
+        TextView maxE = findViewById(R.id.maxE);
+        TextView averageW = findViewById(R.id.avgW);
+        TextView averageE = findViewById(R.id.avgE);
 
         //Initialize Request String
         mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -120,32 +123,47 @@ public class WaterStats extends AppCompatActivity {
 
                 api_resp = response.toString();
                 double tempWater, tempElec;
-                float totalWater = 0;
-                float totalElec = 0;
-                float avgW = 0;
-                float avgE = 0;
+                double totalWater = 0;
+                double totalElec = 0;
+                double avgW = 0;
+                double avgE = 0;
                 String tempDate ="";
+                int count = 0;
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat f1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                 try {
                     JSONArray data = new JSONArray(api_resp);
 
-                    for (int i = 0;i< data.length();i++){
+                    for (int i = 0;i< data.length();i+=1){
                         JSONObject current = data.getJSONObject(i);
                         tempWater = current.getDouble("water");
                         tempElec = current.getDouble("electricity");
                         tempDate = current.getString("DateTime");
                         //totals
-                        totalWater += tempWater;
-                        totalElec += tempElec;
+                        //totalWater += tempWater;
+                        //totalElec += tempElec;
                         Date entryDate = f1.parse(tempDate.toString());
 
                         if (entryDate != null && tempWater>=0 && tempWater<=100 && tempElec>=0 && tempElec<=100) {
+
+                            count++;
                             series.appendData(new DataPoint(entryDate, tempWater), true, data.length());
                             seriesE.appendData(new DataPoint(entryDate, tempElec), true, data.length());
+                            totalWater += tempWater;
+                            totalElec += tempElec;
+
                         }
 
                     }
+                    maxW.setText(Double.toString(totalWater));
+                    maxE.setText(Double.toString(totalElec));
+
+                    avgW = Math.round(totalWater/ count);
+                    avgE = Math.round(totalElec/ count);
+
+                    averageW.setText(Double.toString(avgW));
+                    averageE.setText(Double.toString(avgE));
+
 
 
                 } catch (JSONException | ParseException e) {
