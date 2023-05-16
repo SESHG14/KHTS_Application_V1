@@ -46,7 +46,6 @@
         android:layout_width="350dp"
         android:layout_height="400dp"
         android:layout_marginTop="104dp"
-        android:background="@drawable/black_square_rounded"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
@@ -170,7 +169,7 @@
 
 
             <Switch
-                android:id="@+id/switch2"
+                android:id="@+id/swtWater"
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -182,7 +181,7 @@
                 android:textColor="#282525" />
 
             <Switch
-                android:id="@+id/switch1"
+                android:id="@+id/swtElec"
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"

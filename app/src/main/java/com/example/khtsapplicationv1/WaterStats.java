@@ -6,7 +6,9 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.animation.Animation;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -44,6 +47,9 @@ public class WaterStats extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_stats);
 
+        Switch water = findViewById(R.id.swtWater);
+        Switch elec = findViewById(R.id.swtElec);
+
         String meterNum = getIntent().getStringExtra("meter");
         url = "http://sparkhts.zapto.org/khtsweb/khts-serv/public/index.php/customers/usage/" + meterNum;
 
@@ -64,7 +70,9 @@ public class WaterStats extends AppCompatActivity {
         graph.setTitleTextSize(50);
         graph.addSeries(series);
         graph.addSeries(seriesE);
-        graph.setPivotY(1);
+        //graph.setPivotY(1);
+        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);
+        graph.getViewport().setDrawBorder(true);
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
         graph.getGridLabelRenderer().setNumHorizontalLabels(3);
         graph.getGridLabelRenderer().setNumVerticalLabels(10);
@@ -72,6 +80,31 @@ public class WaterStats extends AppCompatActivity {
         graph.getViewport().setMaxYAxisSize(10);
         graph.getViewport().setYAxisBoundsManual(true);
         getData(url);
+
+        water.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if (!b){
+                    graph.removeSeries(series);
+                }
+                else if (b){
+                    graph.addSeries(series);
+                }
+            }
+        });
+
+        elec.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (!b){
+                    graph.removeSeries(seriesE);
+                }
+                else if (b){
+                    graph.addSeries(seriesE);
+                }
+            }
+        });
     }
 
 
@@ -111,7 +144,6 @@ public class WaterStats extends AppCompatActivity {
                             series.appendData(new DataPoint(entryDate, tempWater), true, data.length());
                             seriesE.appendData(new DataPoint(entryDate, tempElec), true, data.length());
                         }
-
 
                     }
 

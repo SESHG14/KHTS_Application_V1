@@ -106,8 +106,8 @@ public class Home extends AppCompatActivity {
                     meterNum = customer.getString("meterNumber");
                     int maxWater = Integer.parseInt(TotalUnitsW[0].toString());
                     int maxElec = Integer.parseInt(TotalUnitsE[0].toString());
-                    int usageWater = Integer.parseInt(waterUsage[0].toString());
-                    int usageElec = Integer.parseInt(elecUsage[0].toString());
+                    //int usageWater = Integer.parseInt(waterUsage[0].toString());
+                    //int usageElec = Integer.parseInt(elecUsage[0].toString());
                     double tempWater = 0;
                     double tempElec = 0;
 
@@ -116,6 +116,9 @@ public class Home extends AppCompatActivity {
                         tempWater += current.getDouble("water");
                         tempElec += current.getDouble("electricity");
                     }
+
+                    waterUsage[0] = Double.toString(tempWater);
+                    elecUsage[0] = Double.toString(tempElec);
 
                     addr.setText(address[0].toString());                                                //displaying usage data
                     water.setText(waterUsage[0].toString());
@@ -129,7 +132,7 @@ public class Home extends AppCompatActivity {
                     if (waterState[0] == 1){                                                            //Setting progress bars
                         WaterStatus.setText("ACTIVE");
                         progWater.setMax(maxWater);
-                        progWater.setProgress(maxWater-usageWater);
+                        progWater.setProgress((int) (maxWater-tempWater));
 
                     }
                     else{
@@ -140,7 +143,7 @@ public class Home extends AppCompatActivity {
                     if (elecState[0] == 1){
                         ElecStatus.setText("ACTIVE");
                         progElec.setMax(maxElec);
-                        progElec.setProgress(maxElec-usageElec);
+                        progElec.setProgress((int) (maxElec-tempElec));
 
                     }
                     else{
