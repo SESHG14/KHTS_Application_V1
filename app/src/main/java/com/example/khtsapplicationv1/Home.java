@@ -21,12 +21,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 public class Home extends AppCompatActivity {
 
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
     private  String api_resp;
     String meterNum;
+    private static final DecimalFormat decfor = new DecimalFormat("0.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,14 @@ public class Home extends AppCompatActivity {
         /*URL needs to be created depending on user!!!*/
         Button waterRecharge = findViewById(R.id.btnWaterTopUp);
         Button mainRecharge = findViewById(R.id.btnRecharge);
+        Button refresh = findViewById(R.id.btnRefresh);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getData(url_get);
+            }
+        });
 
         waterRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +89,8 @@ public class Home extends AppCompatActivity {
         TextView WaterStatus = findViewById(R.id.lblwaterStatus);
         TextView ElecStatus = findViewById(R.id.lblelecStatus);
         TextView meterNumber = findViewById(R.id.txtMeterNum);
+        TextView currentWater = findViewById(R.id.txtCurrentWater);
+        TextView currentElec = findViewById(R.id.txtCurrentElec);
         ProgressBar progWater = findViewById(R.id.prgWater);
         ProgressBar progElec = findViewById(R.id.prgElec);
 
@@ -111,14 +125,24 @@ public class Home extends AppCompatActivity {
                     double tempWater = 0;
                     double tempElec = 0;
 
-                    for(int i=0;i<reading.length();i++){
+                    /*for(int i=0;i<reading.length();i++){
                         JSONObject current = reading.getJSONObject(i);
                         tempWater += current.getDouble("water");
                         tempElec += current.getDouble("electricity");
-                    }
+                    }*/
 
-                    waterUsage[0] = Double.toString(tempWater);
-                    elecUsage[0] = Double.toString(tempElec);
+                    JSONObject current = reading.getJSONObject(reading.length()-1);
+                    JSONObject recharge = reading.getJSONObject(0);
+
+                    tempWater = current.getDouble("water") - recharge.getDouble("water");
+                    tempElec = current.getDouble("electricity") - recharge.getDouble("electricity");
+
+                    //JSONObject last = reading.getJSONObject(user.length());
+                    currentElec.setText(String.format(Locale.US,"%.2f",current.getDouble("electricity")));
+                    currentWater.setText(String.format(Locale.US,"%.2f",current.getDouble("water")));
+
+                    waterUsage[0] = String.format(Locale.US,"%.2f",tempWater);
+                    elecUsage[0] = String.format(Locale.US,"%.2f",tempElec);
 
                     addr.setText(address[0].toString());                                                //displaying usage data
                     water.setText(waterUsage[0].toString());
