@@ -50,6 +50,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getData(url_get);
+                Toast.makeText(getApplicationContext(),"Refreshed", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -130,12 +131,15 @@ public class Home extends AppCompatActivity {
                         tempWater += current.getDouble("water");
                         tempElec += current.getDouble("electricity");
                     }*/
+                    JSONObject current = new JSONObject();
+                    for (int i = reading.length()-10;i< reading.length();i+=1) {
+                        current = reading.getJSONObject(reading.length() - 1);
+                        JSONObject recharge = reading.getJSONObject(0);
 
-                    JSONObject current = reading.getJSONObject(reading.length()-1);
-                    JSONObject recharge = reading.getJSONObject(0);
+                        tempWater = Math.abs(current.getDouble("water") - recharge.getDouble("water"));
+                        tempElec = Math.abs(current.getDouble("electricity") - recharge.getDouble("electricity"));
+                    }
 
-                    tempWater = current.getDouble("water") - recharge.getDouble("water");
-                    tempElec = current.getDouble("electricity") - recharge.getDouble("electricity");
 
                     //JSONObject last = reading.getJSONObject(user.length());
                     currentElec.setText(String.format(Locale.US,"%.2f",current.getDouble("electricity")));

@@ -32,6 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class WaterStats extends AppCompatActivity {
 
@@ -122,7 +123,8 @@ public class WaterStats extends AppCompatActivity {
             public void onResponse(String response) {
 
                 api_resp = response.toString();
-                double tempWater, tempElec;
+                double tempWater;
+                double tempElec;
                 double totalWater = 0;
                 double totalElec = 0;
                 double avgW = 0;
@@ -134,35 +136,36 @@ public class WaterStats extends AppCompatActivity {
                 try {
                     JSONArray data = new JSONArray(api_resp);
 
-                    for (int i = 0;i< data.length();i+=1){
+                    for (int i = data.length()-10;i< data.length();i+=1){
                         JSONObject current = data.getJSONObject(i);
-                        tempWater = current.getDouble("water");
-                        tempElec = current.getDouble("electricity");
+                        JSONObject prev = data.getJSONObject(i-1);
+                        tempWater = Math.abs(current.getDouble("water")- prev.getDouble("water"));
+                        tempElec = Math.abs(current.getDouble("electricity")-prev.getDouble("electricity"));
                         tempDate = current.getString("DateTime");
                         //totals
                         //totalWater += tempWater;
                         //totalElec += tempElec;
                         Date entryDate = f1.parse(tempDate.toString());
 
-                        if (entryDate != null && tempWater>=0 && tempWater<=100 && tempElec>=0 && tempElec<=100) {
+                        if (entryDate != null && tempWater>=0 && tempElec>=0) {
 
                             count++;
-                            series.appendData(new DataPoint(entryDate, tempWater), true, data.length());
-                            seriesE.appendData(new DataPoint(entryDate, tempElec), true, data.length());
+                            series.appendData(new DataPoint(entryDate, tempWater), true, count);
+                            seriesE.appendData(new DataPoint(entryDate, tempElec), true, count);
                             totalWater += tempWater;
                             totalElec += tempElec;
 
                         }
 
                     }
-                    maxW.setText(Double.toString(totalWater));
-                    maxE.setText(Double.toString(totalElec));
+                    maxW.setText(String.format(Locale.US,"%.2f",totalWater));
+                    maxE.setText(String.format(Locale.US,"%.2f",totalElec));
 
                     avgW = Math.round(totalWater/ count);
                     avgE = Math.round(totalElec/ count);
 
-                    averageW.setText(Double.toString(avgW));
-                    averageE.setText(Double.toString(avgE));
+                    averageW.setText(String.format(Locale.US,"%.2f",avgW));
+                    averageE.setText(String.format(Locale.US,"%.2f",avgE));
 
 
 
